@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <title>Pomodoro</title>
+    <link rel="stylesheet" href="dist/css/style.css" />
+    <script type="module" src="dist/js/script.js" defer></script>
+  </head>
+  <body data-theme="red">
+    <main class="app__container">
+      <h1 class="app__title bold uppercase">Pomodoro</h1>
+      <div class="app__option-wrapper">
+        <button class="app__option app__option--selected" data-theme="red">
+          Foco
+        </button>
+        <button class="app__option" data-theme="green">Pausa curta</button>
+        <button class="app__option" data-theme="blue">Pausa longa</button>
+      </div>
+      <div class="app__enable-music-wrapper">
+        <span class="app__enable-music-description">Música</span>
+        <button class="app__enable-music-btn uppercase">off</button>
+      </div>
+      <div class="app__time bold">25:00</div>
+      <button class="app__btn">Iniciar</button>
+    </main>
+  </body>
+</html>

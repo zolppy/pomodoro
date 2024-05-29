@@ -1,0 +1,51 @@
+@import "./variables.scss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+
+  body {
+    color: white;
+    display: grid;
+    font-family: "Roboto Regular";
+    font-size: 1rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.25;
+    min-height: 100svh;
+    place-items: center;
+
+    &[data-theme="red"] {
+      background-color: $red;
+    }
+
+    &[data-theme="green"] {
+      background-color: $green;
+    }
+
+    &[data-theme="blue"] {
+      background-color: $blue;
+    }
+
+    button {
+      border: none;
+      color: inherit;
+      font-family: inherit;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    h1 {
+      font: inherit;
+    }
+  }
+}
