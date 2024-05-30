@@ -9,7 +9,7 @@
     "min-js": "uglifyjs dist/js/script.js -o dist/js/script.min.js",
     "min-css": "uglifycss dist/css/style.css > dist/css/style.min.css",
     "min-all": "npm run min-js; npm run min-css",
-    "t-ts": "tsc",
+    "t-ts": "tsc --strict src/ts/script.ts --outDir dist/js/",
     "t-sass": "sass src/sass/style.scss dist/css/style.css",
     "tam-script": "npm run t-ts; npm run min-js",
     "tam-style": "npm run t-sass; npm run min-css",

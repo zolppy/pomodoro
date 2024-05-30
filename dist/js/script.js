@@ -1,108 +1,99 @@
 "use strict";
-// hack >>
-const zzz = document.querySelector(".app__option-wrapper");
-zzz === null || zzz === void 0 ? void 0 : zzz.addEventListener("click", function (event) {
-    const el = event.target;
-    const x = [];
-    for (const elm of this.children) {
-        x.push(elm);
-    }
-    const y = x.filter((z) => z != el);
-    el.classList.add("app__option--selected");
-    y.forEach((itm) => {
-        itm.classList.contains("app__option--selected") &&
-            itm.classList.remove("app__option--selected");
-    });
-    const body = document.querySelector("body");
-    body.setAttribute("data-theme", el.getAttribute("data-theme"));
-});
-// << hack
-// hack >>
-let seconds = 60 * 25;
-const xxx = document.querySelector(".app__option-wrapper");
-xxx === null || xxx === void 0 ? void 0 : xxx.addEventListener("click", (event) => {
-    const target = event.target;
-    switch (target.getAttribute("data-theme")) {
-        case "red":
-            seconds = 60 * 25;
-            break;
-        case "green":
-            seconds = 60 * 5;
-            break;
-        case "blue":
-            seconds = 60 * 15;
-    }
-    const time = document.querySelector(".app__time");
-    time.textContent = formatSecondsToMinutes(seconds);
-});
-window.addEventListener("DOMContentLoaded", () => {
-    const target = document.querySelector(".app__option-selected");
-    switch (target === null || target === void 0 ? void 0 : target.getAttribute("data-theme")) {
-        case "red":
-            seconds = 60 * 25;
-            break;
-        case "green":
-            seconds = 60 * 5;
-            break;
-        case "blue":
-            seconds = 60 * 15;
-    }
-    const time = document.querySelector(".app__time");
-    time.textContent = formatSecondsToMinutes(seconds);
-});
-function formatSecondsToMinutes(seconds) {
-    const date = new Date(seconds * 1000);
-    const options = {
+// Variáveis globais
+var seconds;
+var interval;
+var music = new Audio("../../dist/sound/music.mp3");
+var play = new Audio("../../dist/sound/play.wav");
+var pause = new Audio("../../dist/sound/pause.mp3");
+var beep = new Audio("../../dist/sound/beep.mp3");
+music.loop = true;
+beep.loop = true;
+// Mapeamento de elementos do DOM
+var body = document.querySelector("body");
+var time = document.querySelector(".app__time");
+var toggleMuteMusic = document.querySelector(".app__enable-music-btn");
+var options = document.querySelectorAll(".app__option");
+var startOrPause = document.querySelector(".app__btn");
+// Funções
+var formatSecondsToMinutes = function (seconds) {
+    var date = new Date(seconds * 1000);
+    var options = {
         minute: "2-digit",
         second: "2-digit",
         timeZone: "UTC",
     };
     return date.toLocaleString("en-US", options);
-}
-// << hack
-// hack >>
-const toggleMuteMusic = document.querySelector(".app__enable-music-btn");
-const audio = new Audio("../../dist/sound/luna-rise-part-one.mp3");
-audio.loop = true;
-const handleToggleMuteMusic = (event) => {
-    const element = event.target;
-    if (element.textContent === "on") {
-        audio.pause();
-        element.textContent = "off";
-    }
-    else {
-        audio.play();
-        element.textContent = "on";
-    }
 };
-toggleMuteMusic === null || toggleMuteMusic === void 0 ? void 0 : toggleMuteMusic.addEventListener("click", (event) => handleToggleMuteMusic(event));
-// << hack
-// hack >>
-const sound1 = new Audio("../../dist/sound/play.wav");
-const sound2 = new Audio("../../dist/sound/pause.mp3");
-const el = document.querySelector(".app__btn");
-const time = document.querySelector(".app__time");
-let interval;
-el.addEventListener("click", () => {
-    if (el.textContent === "Iniciar") {
-        interval = setInterval(() => {
+var handleToggleMuteMusic = function (event) {
+    var element = event.target;
+    var attr = element.dataset.audio === "on" ? "off" : "on";
+    attr === "on" ? music.play() : music.pause();
+    element.textContent = attr;
+    element.dataset.audio = attr;
+};
+var handleStartOrPause = function (event) {
+    var element = event.target;
+    var timeRunningState = element.dataset.timeRunningState || "stopped";
+    if (timeRunningState === "stopped") {
+        element.dataset.timeRunningState = "running";
+        interval = setInterval(function () {
             if (seconds > 0) {
                 seconds--;
                 time.textContent = formatSecondsToMinutes(seconds);
             }
             else {
                 clearInterval(interval);
-                el.textContent = "Iniciar";
+                element.textContent = "Iniciar";
+                element.dataset.timeRunningState = "stopped";
+                beep.play();
             }
         }, 1000);
-        el.textContent = "Pausar";
-        sound1.play();
+        element.textContent = "Pausar";
+        play.play();
     }
     else {
         clearInterval(interval);
-        el.textContent = "Iniciar";
-        sound2.play();
+        element.textContent = "Iniciar";
+        element.dataset.timeRunningState = "stopped";
+        pause.play();
     }
+    beep.pause();
+};
+var handleChangeOption = function (option, options) {
+    options.forEach(function (option) {
+        if (option.classList.contains("app__option--selected")) {
+            option.classList.remove("app__option--selected");
+        }
+    });
+    option.classList.add("app__option--selected");
+    body.dataset.theme = option.dataset.theme;
+};
+var handleChangeTime = function (option) {
+    var theme = option.dataset.theme;
+    if (theme === "red") {
+        seconds = 60 * 25;
+        seconds = 5 * 1;
+    }
+    else if (theme === "green") {
+        seconds = 60 * 5;
+    }
+    else {
+        seconds = 60 * 15;
+    }
+    time.textContent = formatSecondsToMinutes(seconds);
+};
+// Manipulação de eventos
+window.addEventListener("DOMContentLoaded", function () {
+    seconds = 60 * 25;
+    time.textContent = formatSecondsToMinutes(seconds);
 });
-// << hack
-//# sourceMappingURL=script.js.map
+toggleMuteMusic.addEventListener("click", function (event) {
+    return handleToggleMuteMusic(event);
+});
+startOrPause.addEventListener("click", function (event) { return handleStartOrPause(event); });
+options.forEach(function (itm, _, src) {
+    itm.addEventListener("click", function () {
+        handleChangeOption(itm, src);
+        handleChangeTime(itm);
+    });
+});
