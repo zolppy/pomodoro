@@ -2,10 +2,10 @@
 // Variáveis globais
 var seconds;
 var interval;
-var music = new Audio("../../dist/sound/music.mp3");
-var play = new Audio("../../dist/sound/play.wav");
-var pause = new Audio("../../dist/sound/pause.mp3");
-var beep = new Audio("../../dist/sound/beep.mp3");
+var music = new Audio("../sound/music.mp3");
+var play = new Audio("../sound/play.wav");
+var pause = new Audio("../sound/pause.mp3");
+var beep = new Audio("../sound/beep.mp3");
 music.loop = true;
 beep.loop = true;
 // Mapeamento de elementos do DOM
