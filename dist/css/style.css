@@ -69,43 +69,49 @@ html body h1 {
   padding: 1em;
   width: clamp(320px, 90%, 480px);
 }
-.app__container .app__title {
-  font-size: 1.25rem;
+
+.app__title {
+  font-size: 1.5rem;
 }
-.app__container .app__option-wrapper {
+
+.app__option-wrapper {
   align-self: stretch;
   display: flex;
   justify-content: center;
   gap: 3em;
 }
-.app__container .app__option-wrapper .app__option {
+
+.app__option {
   background-color: transparent;
   font-size: 1rem;
 }
-.app__container .app__option-wrapper .app__option.app__option--selected {
+.app__option.app__option--selected {
   padding: 0.4em;
   border-radius: 0.5em;
   font-family: "Roboto Bold";
 }
-.app__container .app__option-wrapper .app__option.app__option--selected[data-theme=red] {
+.app__option.app__option--selected[data-theme=red] {
   background-color: #633;
 }
-.app__container .app__option-wrapper .app__option.app__option--selected[data-theme=green] {
+.app__option.app__option--selected[data-theme=green] {
   background-color: #363;
 }
-.app__container .app__option-wrapper .app__option.app__option--selected[data-theme=blue] {
+.app__option.app__option--selected[data-theme=blue] {
   background-color: #336;
 }
-.app__container .app__enable-music-wrapper .app__enable-music-btn {
+
+.app__enable-music-btn {
   padding: 0.5em;
   background-color: white;
   color: #733;
   border-radius: 9999px;
 }
-.app__container .app__time {
+
+.app__time {
   font-size: 4.5rem;
 }
-.app__container .app__btn {
+
+.app__btn {
   align-self: stretch;
   color: #733;
   background-color: white;

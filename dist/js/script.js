@@ -72,7 +72,6 @@ var handleChangeTime = function (option) {
     var theme = option.dataset.theme;
     if (theme === "red") {
         seconds = 60 * 25;
-        seconds = 5 * 1;
     }
     else if (theme === "green") {
         seconds = 60 * 5;
