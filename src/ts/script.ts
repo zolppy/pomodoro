@@ -1,10 +1,10 @@
 // Variáveis globais
 let seconds: number;
 let interval: number;
-const music: HTMLAudioElement = new Audio("../sound/music.mp3");
-const play: HTMLAudioElement = new Audio("../sound/play.wav");
-const pause: HTMLAudioElement = new Audio("../sound/pause.mp3");
-const beep: HTMLAudioElement = new Audio("../sound/beep.mp3");
+const music: HTMLAudioElement = new Audio("./dist/sound/music.mp3");
+const play: HTMLAudioElement = new Audio("./dist/sound/play.wav");
+const pause: HTMLAudioElement = new Audio("./dist/sound/pause.mp3");
+const beep: HTMLAudioElement = new Audio("./dist/sound/beep.mp3");
 
 music.loop = true;
 beep.loop = true;
