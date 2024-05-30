@@ -94,7 +94,6 @@ const handleChangeTime = (option: HTMLButtonElement) => {
 
   if (theme === "red") {
     seconds = 60 * 25;
-    seconds = 5 * 1;
   } else if (theme === "green") {
     seconds = 60 * 5;
   } else {
