@@ -1,0 +1,10 @@
+.app__container {
+  align-items: center;
+  background-color: rgba($color: #fff, $alpha: 0.2);
+  border-radius: 0.7em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  padding: 1em;
+  width: clamp(320px, 90%, 480px);
+}

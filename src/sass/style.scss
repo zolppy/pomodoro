@@ -1,85 +1,11 @@
-// hack >>
-
 @import "./base/base.scss";
 @import "./base/generics.scss";
 @import "./base/variables.scss";
-
-@font-face {
-  font-display: swap;
-  font-family: "Roboto Regular";
-  src: url("../font/roboto/roboto-regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-display: swap;
-  font-family: "Roboto Bold";
-  src: url("../font/roboto/roboto-bold.ttf") format("truetype");
-}
-
-.app__container {
-  align-items: center;
-  background-color: rgba($color: #fff, $alpha: 0.2);
-  border-radius: 0.7em;
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  padding: 1em;
-  width: clamp(320px, 90%, 480px);
-
-  .app__title {
-    font-size: 1.25rem;
-  }
-
-  .app__option-wrapper {
-    align-self: stretch;
-    display: flex;
-    justify-content: center;
-    gap: 3em;
-
-    .app__option {
-      background-color: transparent;
-      font-size: 1rem;
-
-      &.app__option--selected {
-        padding: 0.4em;
-        border-radius: 0.5em;
-        font-family: "Roboto Bold";
-
-        &[data-theme="red"] {
-          background-color: $dark-red;
-        }
-
-        &[data-theme="green"] {
-          background-color: $dark-green;
-        }
-
-        &[data-theme="blue"] {
-          background-color: $dark-blue;
-        }
-      }
-    }
-  }
-
-  .app__enable-music-wrapper {
-    .app__enable-music-btn {
-      padding: 0.5em;
-      background-color: white;
-      color: $red;
-      border-radius: 9999px;
-    }
-  }
-
-  .app__time {
-    font-size: 4.5rem;
-  }
-
-  .app__btn {
-    align-self: stretch;
-    color: $red;
-    background-color: white;
-    padding: 0.7em;
-    border-radius: 0.5em;
-  }
-}
-
-// << hack
+@import "./base/font.scss";
+@import "./module/app/app-container.scss";
+@import "./module/app/app-title.scss";
+@import "./module/app/app-optionWrapper.scss";
+@import "./module/app/app-option.scss";
+@import "./module/app/app-enableMusicBtn.scss";
+@import "./module/app/app-time.scss";
+@import "./module/app/app-btn.scss";
