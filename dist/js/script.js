@@ -98,9 +98,12 @@ var pausePomodoro = function () {
     clearInterval(interval);
 };
 var resetPomodoro = function () {
+    disableMusic();
     disableBeep();
     changeTime(theme);
     updateTime(seconds);
+    timeRunning = false;
+    clearInterval(interval);
     startButton.textContent = "Iniciar";
 };
 options.forEach(function (option, index, options) {
@@ -111,10 +114,7 @@ options.forEach(function (option, index, options) {
         option.classList.add("app__option--selected");
         theme = THEMES[index];
         updateTheme(theme);
-        changeTime(theme);
-        updateTime(seconds);
-        clearInterval(interval);
-        timeRunning = false;
+        resetPomodoro();
     });
 });
 enableMusicButton.addEventListener("click", toggleEnableMusic);
