@@ -52,12 +52,12 @@ html body h1 {
 @font-face {
   font-display: swap;
   font-family: "Roboto Regular";
-  src: url("../font/roboto/roboto-regular.ttf") format("truetype");
+  src: local("Roboto"), local("Roboto Regular"), local("Roboto-Regular"), url("../font/roboto/roboto-regular.ttf") format("truetype");
 }
 @font-face {
   font-display: swap;
   font-family: "Roboto Bold";
-  src: url("../font/roboto/roboto-bold.ttf") format("truetype");
+  src: local("Roboto"), local("Roboto Bold"), local("Roboto-Bold"), url("../font/roboto/roboto-bold.ttf") format("truetype");
 }
 .app__container {
   align-items: center;
@@ -90,21 +90,29 @@ html body h1 {
   border-radius: 0.5em;
   font-family: "Roboto Bold";
 }
-.app__option.app__option--selected[data-theme=red] {
+.app__option:first-child.app__option--selected {
   background-color: #633;
 }
-.app__option.app__option--selected[data-theme=green] {
+.app__option:nth-child(2).app__option--selected {
   background-color: #363;
 }
-.app__option.app__option--selected[data-theme=blue] {
+.app__option:last-child.app__option--selected {
   background-color: #336;
 }
 
 .app__enable-music-btn {
   padding: 0.5em;
   background-color: white;
-  color: #733;
   border-radius: 9999px;
+}
+.app__enable-music-btn[data-theme=red] {
+  color: #733;
+}
+.app__enable-music-btn[data-theme=green] {
+  color: #373;
+}
+.app__enable-music-btn[data-theme=blue] {
+  color: #337;
 }
 
 .app__time {
@@ -113,10 +121,18 @@ html body h1 {
 
 .app__btn {
   align-self: stretch;
-  color: #733;
   background-color: white;
   padding: 0.7em;
   border-radius: 0.5em;
+}
+.app__btn[data-theme=red] {
+  color: #733;
+}
+.app__btn[data-theme=green] {
+  color: #373;
+}
+.app__btn[data-theme=blue] {
+  color: #337;
 }
 
 /*# sourceMappingURL=style.css.map */

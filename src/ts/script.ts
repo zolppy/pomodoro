@@ -1,26 +1,31 @@
-// Variáveis globais
-let seconds: number;
-let interval: number;
-const music: HTMLAudioElement = new Audio("./dist/sound/music.mp3");
-const play: HTMLAudioElement = new Audio("./dist/sound/play.wav");
-const pause: HTMLAudioElement = new Audio("./dist/sound/pause.mp3");
-const beep: HTMLAudioElement = new Audio("./dist/sound/beep.mp3");
+// Constantes globais
+const THEMES: string[] = ["red", "green", "blue"];
+const FOCUS_MINUTES = 25;
+const SHORT_BREAK_MINUTES = 5;
+const LONG_BREAK_MINUTES = 15;
 
-music.loop = true;
-beep.loop = true;
+// Variáveis globais
+let theme: string = "red";
+let interval: number;
+let timeRunning: boolean = false;
+let musicOn: boolean = false;
+let beepOn: boolean = false;
+let seconds: number;
+
+// Objetos globais
+const beepAudio = new Audio("dist/audio/beep.mp3");
+const musicAudio = new Audio("dist/audio/music.mp3");
+const pauseAudio = new Audio("dist/audio/pause.mp3");
+const playAudio = new Audio("dist/audio/play.mp3");
 
 // Mapeamento de elementos do DOM
-const body = document.querySelector("body") as HTMLBodyElement;
-const time = document.querySelector(".app__time") as HTMLDivElement;
-const toggleMuteMusic = document.querySelector(
+const enableMusicButton = document.querySelector(
   ".app__enable-music-btn"
 ) as HTMLButtonElement;
 const options = document.querySelectorAll(
   ".app__option"
 ) as NodeListOf<HTMLButtonElement>;
-const startOrPause: HTMLElement = document.querySelector(
-  ".app__btn"
-) as HTMLButtonElement;
+const startButton = document.querySelector(".app__btn") as HTMLButtonElement;
 
 // Funções
 const formatSecondsToMinutes = (seconds: number): string => {
@@ -34,90 +39,129 @@ const formatSecondsToMinutes = (seconds: number): string => {
   return date.toLocaleString("en-US", options);
 };
 
-const handleToggleMuteMusic = (event: MouseEvent) => {
-  const element = event.target as HTMLButtonElement;
-  const attr: string = element.dataset.audio === "on" ? "off" : "on";
-
-  attr === "on" ? music.play() : music.pause();
-
-  element.textContent = attr;
-  element.dataset.audio = attr;
+const enableMusic = () => {
+  musicOn = true;
+  enableMusicButton.textContent = "on";
+  musicAudio.loop = true;
+  musicAudio.play();
 };
 
-const handleStartOrPause = (event: MouseEvent) => {
-  const element = event.target as HTMLButtonElement;
-  const timeRunningState = element.dataset.timeRunningState || "stopped";
+const disableMusic = () => {
+  musicOn = false;
+  enableMusicButton.textContent = "off";
+  musicAudio.loop = false;
+  musicAudio.pause();
+};
 
-  if (timeRunningState === "stopped") {
-    element.dataset.timeRunningState = "running";
+const toggleEnableMusic = () => {
+  !musicOn ? enableMusic() : disableMusic();
+};
 
-    interval = setInterval(() => {
-      if (seconds > 0) {
-        seconds--;
-        time.textContent = formatSecondsToMinutes(seconds);
-      } else {
-        clearInterval(interval);
-        element.textContent = "Iniciar";
-        element.dataset.timeRunningState = "stopped";
-        beep.play();
-      }
-    }, 1000);
+const enableBeep = () => {
+  beepOn = true;
+  beepAudio.loop = true;
+  beepAudio.play();
+};
 
-    element.textContent = "Pausar";
-    play.play();
-  } else {
-    clearInterval(interval);
-    element.textContent = "Iniciar";
-    element.dataset.timeRunningState = "stopped";
-    pause.play();
+const disableBeep = () => {
+  beepOn = false;
+  beepAudio.loop = false;
+  beepAudio.pause();
+};
+
+const updateTheme = (theme: string) => {
+  const body = document.querySelector("body") as HTMLBodyElement;
+  const startButton = document.querySelector(".app__btn") as HTMLButtonElement;
+  const enableMusicButton = document.querySelector(
+    ".app__enable-music-btn"
+  ) as HTMLButtonElement;
+
+  body.dataset.theme = theme;
+  startButton.dataset.theme = theme;
+  enableMusicButton.dataset.theme = theme;
+};
+
+const changeTime = (theme: string) => {
+  switch (theme) {
+    case "red":
+      seconds = 60 * FOCUS_MINUTES;
+      break;
+    case "green":
+      seconds = 60 * SHORT_BREAK_MINUTES;
+      break;
+    case "blue":
+      seconds = 60 * LONG_BREAK_MINUTES;
   }
-
-  beep.pause();
 };
 
-const handleChangeOption = (
-  option: HTMLButtonElement,
-  options: NodeListOf<HTMLButtonElement>
-) => {
-  options.forEach((option) => {
-    if (option.classList.contains("app__option--selected")) {
-      option.classList.remove("app__option--selected");
+const updateTime = (seconds: number) => {
+  const appTime = document.querySelector(".app__time") as HTMLDivElement;
+
+  appTime.textContent = formatSecondsToMinutes(seconds);
+};
+
+const startPomodoro = () => {
+  playAudio.play();
+  timeRunning = true;
+  startButton.textContent = "Pausar";
+
+  interval = setInterval(() => {
+    if (seconds--) {
+      updateTime(seconds);
+    } else {
+      clearInterval(interval);
+      disableMusic();
+      enableBeep();
+      startButton.textContent = "Restaurar";
+      timeRunning = false;
     }
-  });
-
-  option.classList.add("app__option--selected");
-  body.dataset.theme = option.dataset.theme;
+  }, 1000);
 };
 
-const handleChangeTime = (option: HTMLButtonElement) => {
-  const theme = option.dataset.theme as string;
+const pausePomodoro = () => {
+  pauseAudio.play();
+  startButton.textContent = "Retomar";
+  timeRunning = false;
+  clearInterval(interval);
+};
 
-  if (theme === "red") {
-    seconds = 60 * 25;
-  } else if (theme === "green") {
-    seconds = 60 * 5;
-  } else {
-    seconds = 60 * 15;
-  }
-
-  time.textContent = formatSecondsToMinutes(seconds);
+const resetPomodoro = () => {
+  disableBeep();
+  changeTime(theme);
+  updateTime(seconds);
+  startButton.textContent = "Iniciar";
 };
 
 // Manipulação de eventos
-window.addEventListener("DOMContentLoaded", () => {
-  seconds = 60 * 25;
-  time.textContent = formatSecondsToMinutes(seconds);
+options.forEach((option, index, options) => {
+  option.addEventListener("click", () => {
+    options.forEach((option) => {
+      option.classList.remove("app__option--selected");
+    });
+
+    option.classList.add("app__option--selected");
+    theme = THEMES[index];
+    updateTheme(theme);
+    changeTime(theme);
+    updateTime(seconds);
+    clearInterval(interval);
+    timeRunning = false;
+  });
 });
 
-toggleMuteMusic.addEventListener("click", (event) =>
-  handleToggleMuteMusic(event)
-);
+enableMusicButton.addEventListener("click", toggleEnableMusic);
 
-startOrPause.addEventListener("click", (event) => handleStartOrPause(event));
+window.addEventListener("DOMContentLoaded", () => {
+  changeTime(theme);
+  updateTime(seconds);
+});
 
-options.forEach((itm, _, src) => {
-  itm.addEventListener("click", () => {
-    handleChangeOption(itm, src);
-    handleChangeTime(itm);
-  });
+startButton.addEventListener("click", function () {
+  if (this.textContent === "Pausar") {
+    pausePomodoro();
+  } else if (this.textContent === "Iniciar" || this.textContent === "Retomar") {
+    startPomodoro();
+  } else {
+    resetPomodoro();
+  }
 });

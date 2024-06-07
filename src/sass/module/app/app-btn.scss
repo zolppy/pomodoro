@@ -1,7 +1,18 @@
+@import "../../base/variables.scss";
+
 .app__btn {
   align-self: stretch;
-  color: $red;
   background-color: white;
   padding: 0.7em;
   border-radius: 0.5em;
+
+  &[data-theme="red"] {
+    color: $red;
+  }
+  &[data-theme="green"] {
+    color: $green;
+  }
+  &[data-theme="blue"] {
+    color: $blue;
+  }
 }

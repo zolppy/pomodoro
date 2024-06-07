@@ -1,6 +1,17 @@
+@import "../../base/variables.scss";
+
 .app__enable-music-btn {
   padding: 0.5em;
   background-color: white;
-  color: $red;
   border-radius: 9999px;
+
+  &[data-theme="red"] {
+    color: $red;
+  }
+  &[data-theme="green"] {
+    color: $green;
+  }
+  &[data-theme="blue"] {
+    color: $blue;
+  }
 }

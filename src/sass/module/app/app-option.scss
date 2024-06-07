@@ -6,17 +6,17 @@
     padding: 0.4em;
     border-radius: 0.5em;
     font-family: "Roboto Bold";
+  }
 
-    &[data-theme="red"] {
-      background-color: $dark-red;
-    }
+  &:first-child.app__option--selected {
+    background-color: $dark-red;
+  }
 
-    &[data-theme="green"] {
-      background-color: $dark-green;
-    }
+  &:nth-child(2).app__option--selected {
+    background-color: $dark-green;
+  }
 
-    &[data-theme="blue"] {
-      background-color: $dark-blue;
-    }
+  &:last-child.app__option--selected {
+    background-color: $dark-blue;
   }
 }
